@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react"
 import fetchFromSpotify, { request } from "../services/api"
-import ArtistForm from "./ArtistForm"
-import SongForm from "./SongForm"
 import { useHistory } from "react-router-dom"
 import { useRecoilState } from "recoil"
-import { gameSongsState } from "../GlobalState"
+import { gameSongsState, numArtistsState, numSongsState, selectedGenreState } from "../GlobalState"
 
 const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token"
@@ -12,62 +10,21 @@ const TOKEN_KEY = "whos-who-access-token"
 
 const Home = () => {
   const [genres, setGenres] = useState([])
-  const [selectedGenre, setSelectedGenre] = useState("rock")
-  const [tracks, setTracks] = useState([])
-  const [selectedTrack, setSelectedTrack] = useState("")
+  const [selectedGenre, setSelectedGenre] = useRecoilState(selectedGenreState)
+  const [numArtists, setNumArtists] = useRecoilState(numArtistsState)
+  const [numSongs, setNumSongs] = useRecoilState(numSongsState)
   const [authLoading, setAuthLoading] = useState(false)
   const [configLoading, setConfigLoading] = useState(false)
   const [token, setToken] = useState("")
-  const [artist, setArtist] = useState("")
-  const [artistSongs, setArtistSongs] = useRecoilState(gameSongsState)
-
+  
   const loadGenres = async t => {
     setConfigLoading(true)
     const response = await fetchFromSpotify({
       token: t,
       endpoint: "recommendations/available-genre-seeds",
     })
-    console.log(response)
     setGenres(response.genres)
     setConfigLoading(false)
-  }
-
-  const setArtistForGame = () => {
-    const artist1 = tracks[0].artists[0].id
-    loadArtistSongs(token, artist1)
-    console.log(artistSongs)
-  }
-
-  const loadTracks = async t => {
-    const response = await fetchFromSpotify({
-      token: t,
-      endpoint: "recommendations",
-      params: {
-        market: "US",
-        seed_genres: selectedGenre,
-        limit: 20,
-      },
-    })
-    // .then(({ artists }) => setArtists(artists))
-    setTracks(response.tracks)
-    console.log(response.tracks)
-    // setConfigLoading(false)
-  }
-
-  const loadArtistSongs = async (t, artist) => {
-    const response = await fetchFromSpotify({
-      token: t,
-      endpoint: `artists/${artist}/top-tracks`,
-      params: {
-        market: "US"
-      },
-    })
-    .then(response => setArtistSongs(response))
-  }
-
-  const setGameData = (t) => {
-    setTracks(loadTracks(t))
-    console.log(tracks)
   }
 
   useEffect(() => {
@@ -81,7 +38,6 @@ const Home = () => {
         setAuthLoading(false)
         setToken(storedToken.value)
         loadGenres(storedToken.value)
-        loadTracks(storedToken.value)
       }
     }
     console.log("Sending request to AWS endpoint")
@@ -94,7 +50,6 @@ const Home = () => {
       setAuthLoading(false)
       setToken(newToken.value)
       loadGenres(newToken.value)
-      loadTracks(newToken.value)
     })
   }, [])
 
@@ -102,15 +57,10 @@ const Home = () => {
     return <div>Loading...</div>
   }
 
-  if(artistSongs === [] ){
-    return <div>Loading...</div>
-  }
-
   const history = useHistory()
 
   const handleSubmit = event => {
     event.preventDefault()
-    localStorage.setItem("selectedGenre", JSON.stringify(selectedGenre))
     // 👇️ redirect to game screen
     history.push("/game")
   }
@@ -132,17 +82,38 @@ const Home = () => {
             ))}
           </select>
         </div>
-        <ArtistForm />
-        <SongForm />
+        <div>
+          Number of Songs To Listen To:
+          <select
+            value={numSongs}
+            onChange={event => setNumSongs(event.target.value)}
+          >
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+
+          </select>
+        </div>
+        <div>
+          Number of Artist Choices:
+          <select
+            value={numArtists}
+            onChange={event => setNumArtists(event.target.value)}
+          >
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+
+          </select>
+        </div>
         <br />
         <button  type="submit">
           P L A Y
         </button>
       </form>
-      <button onClick={() => console.log(selectedGenre)}>Log</button>
-      <button onClick={() => setGameData(token)}>Log Tracks</button>
-      <button onClick={() => setArtistForGame()}>Get Artist Tracks</button>
-      <button onClick={() => console.log(artistSongs)}>Log Artist Tracks</button>
+      <button onClick={() => console.log(selectedGenre)}>Log Selected Genre</button>
+      <button onClick={() => console.log(numSongs)}>Log # of Songs To Listen To</button>
+      <button onClick={() => console.log(numArtists)}>Log # of Artists Set</button>
     </div>
   )
 }
