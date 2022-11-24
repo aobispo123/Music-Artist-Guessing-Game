@@ -1,6 +1,6 @@
 import { atom } from "recoil"
 
-export const gameSongsState = atom({
+export const selectedArtistSongsState = atom({
     key: "gameSongsState",
     default: []
 })
@@ -34,4 +34,9 @@ export const selectedArtistState = atom({
 export const notNullPreviewsState = atom({
     key: "notNullPreviewsState",
     default: []
+})
+
+export const selectedArtistNameState = atom({
+    key: "selectedArtistNameState",
+    default: ""
 })
