@@ -30,8 +30,8 @@ const Game = () => {
       },
     })
     setTracks(response.tracks)
-    const targetArtist = response.tracks[0].artists[0].id
-    setSelectedArtist(targetArtist)
+    const targetArtist = response.tracks[0].artists[0].id // loop through random artists and check for null values if all null set tartgetArtist to be 
+    setSelectedArtist(targetArtist)                       // next artist. Keep looping until finding an artist that has equal or more previews than numSongs
     setConfigLoading(false)
     loadArtistSongs(t, targetArtist)
   }
