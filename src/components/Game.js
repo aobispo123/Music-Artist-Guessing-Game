@@ -67,9 +67,10 @@ const Game = () => {
         setAuthLoading(false)
         setToken(storedToken.value)
         loadTracks(storedToken.value)
-        if(notNullPreviews <= numSongs){
-          loadTracks(storedToken.value)
-        }
+        // if(notNullPreviews.length <= numSongs){
+        //   loadTracks(newToken.value)
+        // }
+        
       }
     }
     console.log("Sending request to AWS endpoint")
@@ -82,9 +83,9 @@ const Game = () => {
       setAuthLoading(false)
       setToken(newToken.value)
       loadTracks(newToken.value)
-      if(notNullPreviews <= numSongs){
-        loadTracks(newToken.value)
-      }
+      // if(notNullPreviews.length <= numSongs){
+      //   loadTracks(newToken.value)
+      // }
     })
   }, [])
 
@@ -108,8 +109,8 @@ const Game = () => {
       <button onClick={() => console.log(selectedArtistSongs)}>Log Artist Tracks</button>
       <button onClick={() => console.log(selectedArtistSongs.tracks[0].preview_url)}>Log preview url</button>
       <button onClick={() => console.log(notNullPreviews)}>Log preview url list</button>
-      <button onClick={() => console.log(numSongs)}>Log Number of songs to listen</button>
       <button onClick={() => console.log(notNullPreviews.length)}>Log length of notNullPreviews</button>
+      <button onClick={() => console.log(numSongs)}>Log Number of songs to listen</button>
     </div>
   );
 };
