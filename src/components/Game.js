@@ -12,6 +12,7 @@ import {
   selectedArtistNameState,
   guessCounterState,
   numArtistsState,
+  artistNamesState,
 } from "../GlobalState";
 import PlaySongButtons from "./PlaySongButtons";
 
@@ -25,6 +26,7 @@ const Game = () => {
   const [selectedArtist, setSelectedArtist] = useRecoilState(selectedArtistState)
   const [selectedArtistSongs, setSelectedArtistSongs] = useRecoilState(selectedArtistSongsState)
   const [selectedArtistName, setSelectedArtistName] = useRecoilState(selectedArtistNameState)
+  const [artistNames, setArtistNames] = useRecoilState(artistNamesState)
   const [notNullPreviews, setNotNullPreviews] = useRecoilState(notNullPreviewsState)
   const [numSongs, setNumSongs] = useRecoilState(numSongsState)
   const [numArtists, setNumArtists] = useRecoilState(numArtistsState)
@@ -50,6 +52,7 @@ const Game = () => {
     //Decreases the chance of getting an empty or less than numSongs previews array
     let artistWithPreviews = ''
     let targetArtistName = ''
+    let artistNames = []
     for(let i = 0; i < response.tracks.length; i++){
       if(response.tracks[i].preview_url != null){
         artistWithPreviews = response.tracks[i].artists[0].id
@@ -57,10 +60,20 @@ const Game = () => {
         break;
       }
     }
-    const targetArtist = artistWithPreviews 
-    const selectedTargetArtistName = targetArtistName    
-    setSelectedArtist(targetArtist)                       
+
+    const targetArtist = artistWithPreviews
+    const selectedTargetArtistName = targetArtistName
+    setSelectedArtist(targetArtist)
     setSelectedArtistName(selectedTargetArtistName)
+
+    for(let i = 0; i < 4; i++){
+      if(!artistNames.includes(selectedTargetArtistName)){
+        artistNames.push(selectedTargetArtistName)
+      }else if(response.tracks[i].artists[0].name != selectedTargetArtistName){
+        artistNames.push(response.tracks[i].artists[0].name)
+      }
+    }
+    setArtistNames(artistNames)
     setConfigLoading(false)
     loadArtistSongs(t, targetArtist)
   }
@@ -129,6 +142,7 @@ const Game = () => {
       <button onClick={() => console.log(notNullPreviews)}>Log preview url list</button>
       <button onClick={() => console.log(notNullPreviews.length)}>Log length of notNullPreviews</button>
       <button onClick={() => console.log(numSongs)}>Log Number of songs to listen</button>
+      <button onClick={() => console.log(artistNames)}>Artist names for game</button>
       <PlaySongButtons/>
       <ArtistChoices/>
     </div>
