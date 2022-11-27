@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 import { useRecoilState } from "recoil";
 import { artistNamesForGameState, artistNamesState, guessCounterState, selectedArtistNameState } from "../GlobalState";
 
@@ -21,19 +22,23 @@ const ArtistChoices = () => {
     let artist2 = setName(artistNamesForGame)
     let artist3 = setName(artistNamesForGame)
 
+    const history = useHistory()
+
     const checkGuess = (artist) => {
         if(artist != selectedArtistName){
             guesses--
             setGuessCounter(guesses)
             console.log('incorrect guess')
-            // if(guessCounter === 0){
-
-            // }
+            if(guesses === 0){
+                history.push('/lose')
+            }
         }else {
-            console.log('you win')
+            history.push('/win')
         }
     }
 
+    // Disable buttons depending on numArtists AND WATCH OUT for which button has the correctArtist
+    // That buttons always needs to be SHOWN
     return(
         <div>
             <button onClick={() => checkGuess(artist1)}>Log Artist 1</button>

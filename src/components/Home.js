@@ -107,7 +107,7 @@ const Home = () => {
           </select>
         </div>
         <br />
-        <button  type="submit">
+        <button type="submit">
           P L A Y
         </button>
       </form>

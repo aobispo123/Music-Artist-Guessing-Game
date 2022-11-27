@@ -133,6 +133,7 @@ const Game = () => {
   return (
     <div>
       <h2>Game Page</h2>
+      <p>{guessCounter}</p>
       <button onClick={() => console.log(selectedGenre)}>Log Selected Genre</button>
       <button onClick={() => console.log(tracks)}>Log Loaded Tracks</button>
       <button onClick={() => console.log(selectedArtist)}>Log Selected Artist</button>
@@ -143,6 +144,7 @@ const Game = () => {
       <button onClick={() => console.log(notNullPreviews.length)}>Log length of notNullPreviews</button>
       <button onClick={() => console.log(numSongs)}>Log Number of songs to listen</button>
       <button onClick={() => console.log(artistNames)}>Artist names for game</button>
+      <button onClick={() => console.log(guessCounter)}>Guess Counter Check</button>
       <PlaySongButtons/>
       <ArtistChoices/>
     </div>
