@@ -8,12 +8,10 @@ border: 1px solid black;
 &:disabled {
     visibility: hidden;
 }
-}
 `
 export const PlaySongButton3 = styled.button`
 border: 1px solid black;
 &:disabled {
     visibility: hidden;
-}
 }
 `
