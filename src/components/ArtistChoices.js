@@ -8,6 +8,7 @@ const ArtistChoices = () => {
     const [artistNames, setArtistNames] = useRecoilState(artistNamesState)
     
     let artistNamesForGame = [artistNames[0], artistNames[1], artistNames[2]]
+    let guesses = guessCounter
     
     const setName = (artistArray) => {
         const index = Math.floor(Math.random() * artistArray.length);
@@ -16,15 +17,28 @@ const ArtistChoices = () => {
         return currentName
     }
 
-    // const checkGuess = () => {
-    //     if(value === selectedArtistName){
+    let artist1 = setName(artistNamesForGame)
+    let artist2 = setName(artistNamesForGame)
+    let artist3 = setName(artistNamesForGame)
 
-    //     }
-    // }
+    const checkGuess = (artist) => {
+        if(artist != selectedArtistName){
+            guesses--
+            setGuessCounter(guesses)
+            console.log('incorrect guess')
+            // if(guessCounter === 0){
+
+            // }
+        }else {
+            console.log('you win')
+        }
+    }
 
     return(
         <div>
-            <button onClick={() => console.log(guessCounter)}>Test Guess Counter From Artist Choices</button>
+            <button onClick={() => checkGuess(artist1)}>Log Artist 1</button>
+            <button onClick={() => console.log(artist2)}>Log Artist 2</button>
+            <button onClick={() => console.log(artist3)}>Log Artist 3</button>
             <button onClick={() => console.log(selectedArtistName)}>Test Selected Artist From Artist Choices</button>
             <button onClick={() => console.log(artistNames)}>Test Artists Names from Artist Choices</button>
             <button onClick={() => console.log(artistNamesForGame)}>Log Artists Names for Game</button>
