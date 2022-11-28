@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useRecoilState } from "recoil";
 import { notNullPreviewsState, numSongsState } from "../GlobalState";
-import { PlaySongButton1, PlaySongButton2, PlaySongButton3 } from './Button.jsx'
+import { PlaySongButton, PauseSongButton } from './Button.jsx'
 import { Howl, Howler } from "howler";
 
 const PlaySongButtons = () => {
@@ -33,19 +33,15 @@ const PlaySongButtons = () => {
         format: ['mp3'],
         volume: 0.5,
     });
-
+    
     return(
         <div>
-            <button onClick={() => console.log(notNullPreviews)}>Test Not Null Previews From Play Song Buttons</button>
-            <PlaySongButton1 onClick={() => sound1.play()}>Play1</PlaySongButton1>
-            <PlaySongButton1 onClick={() => sound1.pause()}>Pause1</PlaySongButton1>
-
-            <PlaySongButton2 onClick={() => sound2.play()} disabled={numSongs == 1}>Play2</PlaySongButton2>
-            <PlaySongButton2 onClick={() => sound2.pause()} disabled={numSongs == 1}>Pause2</PlaySongButton2>
-
-            <PlaySongButton3 onClick={() => sound3.play()} disabled={numSongs == 2 || numSongs == 1}>Play3</PlaySongButton3>
-            <PlaySongButton3 onClick={() => sound3.pause()} disabled={numSongs == 1 || numSongs == 2}>Pause3</PlaySongButton3>
-
+            <PlaySongButton onClick={() => sound1.play()}>Play Song 1</PlaySongButton>
+            <PlaySongButton onClick={() => sound1.pause()}>Pause Song 1</PlaySongButton>
+            <PlaySongButton onClick={() => sound2.play()} disabled={numSongs == 1}>Play Song 2</PlaySongButton>
+            <PlaySongButton onClick={() => sound2.pause()} disabled={numSongs == 1}>Pause Song 2</PlaySongButton>
+            <PlaySongButton onClick={() => sound3.play()} disabled={numSongs == 2 || numSongs == 1}>Play Song 3</PlaySongButton>
+            <PlaySongButton onClick={() => sound3.pause()} disabled={numSongs == 1 || numSongs == 2}>Pause Song 3</PlaySongButton>
         </div>
     )
 }

@@ -94,18 +94,20 @@ const ArtistChoices = () => {
     if (numArtists === 2) {
       return true;
     }
-    if (artist4 === selectedArtistName) {
+    if (artist4 === selectedArtistName && numArtists === 3) {
       return true;
     }
   };
 
   // DONE
   const showOrHide4 = () => {
-    if (artist4 === selectedArtistName || numArtists === 4) {
+    if(numArtists > 3){
       return false;
-    } else {
-      return true;
     }
+    if (artist4 === selectedArtistName) {
+      return false;
+    } 
+    return true;
   };
 
   // Disable buttons depending on numArtists AND WATCH OUT for which button has the correctArtist
@@ -136,20 +138,6 @@ const ArtistChoices = () => {
       >
         {artist4}
       </ArtistChoice>
-
-      <button onClick={() => console.log(selectedArtistName)}>
-        Test Selected Artist From Artist Choices
-      </button>
-      <button onClick={() => console.log(artistNames)}>
-        Test Artists Names from Artist Choices
-      </button>
-      <button onClick={() => console.log(artistNamesForGame)}>
-        Log Artists Names for Game
-      </button>
-      <button onClick={() => console.log(setName(artistNamesForGame))}>
-        Log Set Name
-      </button>
-      <button onClick={() => console.log(numArtists)}>Log Num Artists</button>
     </div>
   );
 };

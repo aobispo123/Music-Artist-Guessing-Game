@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from "react-router-dom"
+import { Winner } from './Button.jsx'
 
 const Win = () => {
     const history = useHistory()
@@ -10,12 +11,12 @@ const Win = () => {
     }
      
     return(
-        <div>
+        <Winner>
             <form onSubmit={goHome}>
                 <p>You win</p>
                 <button type='submit'>Play again</button>
             </form>
-        </div>
+        </Winner>
     )
 }
 

@@ -16,6 +16,8 @@ import {
 } from "../GlobalState";
 import PlaySongButtons from "./PlaySongButtons";
 
+import { SpinnerOverlay, SpinnerContainer, Song, Guess, Choice } from './Button.jsx'
+
 const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token"
 const TOKEN_KEY = "whos-who-access-token"
@@ -126,27 +128,25 @@ const Game = () => {
   }, [])
 
   if (authLoading || configLoading) {
-    return <div>Loading...</div>
+    return (
+      <SpinnerOverlay>
+          <SpinnerContainer/>
+      </SpinnerOverlay>
+    );
   }
   
  // Test Buttons
   return (
     <div>
-      <h2>Game Page</h2>
-      <p>{guessCounter}</p>
-      <button onClick={() => console.log(selectedGenre)}>Log Selected Genre</button>
-      <button onClick={() => console.log(tracks)}>Log Loaded Tracks</button>
-      <button onClick={() => console.log(selectedArtist)}>Log Selected Artist</button>
-      <button onClick={() => console.log(selectedArtistName)}>Log Selected Artist Name</button>
-      <button onClick={() => console.log(selectedArtistSongs)}>Log Artist Tracks</button>
-      <button onClick={() => console.log(selectedArtistSongs.tracks[0].preview_url)}>Log preview url</button>
-      <button onClick={() => console.log(notNullPreviews)}>Log preview url list</button>
-      <button onClick={() => console.log(notNullPreviews.length)}>Log length of notNullPreviews</button>
-      <button onClick={() => console.log(numSongs)}>Log Number of songs to listen</button>
-      <button onClick={() => console.log(artistNames)}>Artist names for game</button>
-      <button onClick={() => console.log(guessCounter)}>Guess Counter Check</button>
-      <PlaySongButtons/>
-      <ArtistChoices/>
+      <Guess>
+        <p>Guesses Left: {guessCounter}</p>
+      </Guess>
+        <Song>
+          <PlaySongButtons/>
+        </Song>
+        <Choice>
+          <ArtistChoices/>
+        </Choice>
     </div>
   );
 };
