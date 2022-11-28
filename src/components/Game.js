@@ -66,7 +66,7 @@ const Game = () => {
     setSelectedArtist(targetArtist)
     setSelectedArtistName(selectedTargetArtistName)
 
-    for(let i = 0; i < 4; i++){
+    for(let i = 0; i < 5; i++){
       if(!artistNames.includes(selectedTargetArtistName)){
         artistNames.push(selectedTargetArtistName)
       }else if(response.tracks[i].artists[0].name != selectedTargetArtistName){

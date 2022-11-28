@@ -15,3 +15,10 @@ border: 1px solid black;
     visibility: hidden;
 }
 `
+
+export const ArtistChoice = styled.button`
+border: 1px solid black;
+&:disabled {
+    visibility: hidden;
+}
+`
